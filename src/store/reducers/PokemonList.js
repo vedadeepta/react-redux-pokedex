@@ -1,11 +1,12 @@
 const initialState = {
   allPokemons: [], // all pokemons data
   pokemons: [], // filtered pokemons passed into React
-  nextUrl: '',
+  count: 0, // total count of all the pokemons needed for pagination
   fetching: false,
   fetched: false,
   pokeTypeAPI: false, // indicates if poketype needs to be fetched from api
-  error: false
+  error: false,
+  type: 'none'
 };
 
 export default function reducer(state = initialState, action) {
@@ -21,7 +22,6 @@ export default function reducer(state = initialState, action) {
           fetching: false,
           fetched: true,
           count: action.value.count,
-          nextUrl: action.value.nextUrl
         }
       );
     }
@@ -54,6 +54,7 @@ export default function reducer(state = initialState, action) {
         state,
         {
           pokemons: pokeFilter,
+          type: action.value.type,
           pokeTypeAPI: !pokeFilter.length
         }
       );
@@ -68,20 +69,21 @@ export default function reducer(state = initialState, action) {
       );
     }
     case 'FETCH_POKEDATA_COMPLETE' : {
-      const parsedPokeData = action.value.pokeData.map((pokeData) => {
-        return pokeData.data;
-      });
-      return Object.assign(
-        {},
-        state,
-        {
-          fetching: false,
-          fetched: true,
-          pokeTypeAPI: false,
-          allPokemons: state.pokemons.concat(parsedPokeData),
-          pokemons: state.pokemons.concat(parsedPokeData)
-        }
-      );
+      const poketypes = action.value.pokeData.types.map(t => t.type.name);
+      if (poketypes.includes(state.type) || state.type === 'none') {
+        return Object.assign(
+          {},
+          state,
+          {
+            fetching: false,
+            fetched: true,
+            pokeTypeAPI: false,
+            allPokemons: state.pokemons.concat(action.value.pokeData),
+            pokemons: state.pokemons.concat(action.value.pokeData)
+          }
+        );
+      }
+      return state;
     }
     case 'FETCH_POKEDATA_ERROR' : {
       return Object.assign({}, state, { fetching: false, error: true });

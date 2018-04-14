@@ -16,19 +16,17 @@ export function pokeFetch(limit) {
                   nextUrl,
                 }
               });
-              dispatch({ type: 'FETCH_POKEDATA' });
-              return Promise.all(
-                pokemons.map((poke) => {
-                  return axios.get(poke.url);
-                })
-              );
-            })
-            .then((response) => {
-              dispatch({
-                type: 'FETCH_POKEDATA_COMPLETE',
-                value: {
-                  pokeData: response
-                }
+              pokemons.map((poke) => {
+                dispatch({ type: 'FETCH_POKEDATA' });
+                return axios.get(poke.url)
+                  .then((res) => {
+                    dispatch({
+                      type: 'FETCH_POKEDATA_COMPLETE',
+                      value: {
+                        pokeData: res.data
+                      }
+                    });
+                  });
               });
             })
             .catch(() => {
@@ -47,25 +45,22 @@ export function groupByType(type) {
     });
   };
 }
-/*eslint-disable*/
 export function fetchPokeType(type) {
   return (dispatch) => {
     axios.get(`https://pokeapi.co/api/v2/type/${type}`)
         .then((response) => {
           const pokemons = response.data.pokemon.map(poke => poke.pokemon);
-          dispatch({type: 'FETCH_POKEDATA'});
-          return Promise.all(
-            pokemons.map((poke) => {
-              return axios.get(poke.url);
-            })
-          );
-        })
-        .then((response) => {
-          dispatch({
-            type: 'FETCH_POKEDATA_COMPLETE',
-            value: {
-              pokeData: response
-            }
+          pokemons.map((poke) => {
+            dispatch({ type: 'FETCH_POKEDATA' });
+            return axios.get(poke.url)
+              .then((res) => {
+                dispatch({
+                  type: 'FETCH_POKEDATA_COMPLETE',
+                  value: {
+                    pokeData: res.data
+                  }
+                });
+              });
           });
         })
         .catch(() => {
