@@ -2,7 +2,7 @@
   "name": "pokemon",
   "main": "webpack.config.js",
   "scripts": {
-    "build": "webpack -p",
+    "build": "webpack --optimize-minimize && cp public/index.html build/index.html",
     "start": "node_modules/.bin/webpack-dev-server --inline",
     "test": "node_modules/.bin/mocha -r jsdom-global/register --compilers js:babel-core/register  assets/js/test/**/*.test.js"
   },
@@ -14,6 +14,7 @@
     "json-loader": "^0.5.4",
     "lodash": "^4.16.4",
     "material-ui": "^0.20.0",
+    "material-ui-pagination": "^1.1.6",
     "material-ui-search-bar": "^0.4.1",
     "mocha": "^3.1.2",
     "nock": "^9.0.2",
@@ -23,6 +24,7 @@
     "react": "^15.3.2",
     "react-addons-css-transition-group": "^15.3.2",
     "react-addons-test-utils": "^15.4.0",
+    "react-d3-components": "^0.9.1",
     "react-dom": "^15.3.2",
     "react-infinite-scroll": "^0.1.5",
     "react-infinite-scroll-component": "^2.0.1",
@@ -30,6 +32,7 @@
     "react-redux": "^4.4.5",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
+    "react-stack-grid": "^0.7.1",
     "redux": "^3.6.0",
     "redux-logger": "^2.7.4",
     "redux-mock-store": "^1.2.1",

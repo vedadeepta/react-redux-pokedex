@@ -1,23 +1,21 @@
 import axios from 'axios';
 
 // fetch intial pokemons data
-export function pokeFetch(limit) {
+export function pokeFetch(limit, offset) {
   return (dispatch) => {
     dispatch({ type: 'FETCH_POKEMONS' });
-    return axios.get(`https://pokeapi.co/api/v2/pokemon?limit=${limit}`)
+    return axios.get(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`)
             .then((response) => {
               const pokemons = response.data.results;
               const count = response.data.count;
-              const nextUrl = response.data.next;
               dispatch({
                 type: 'FETCH_POKEMONS_COMPLETE',
                 value: {
-                  count,
-                  nextUrl,
+                  count
                 }
               });
+              dispatch({ type: 'FETCH_POKEDATA' });
               pokemons.map((poke) => {
-                dispatch({ type: 'FETCH_POKEDATA' });
                 return axios.get(poke.url)
                   .then((res) => {
                     dispatch({
@@ -26,32 +24,45 @@ export function pokeFetch(limit) {
                         pokeData: res.data
                       }
                     });
+                  })
+                  .catch(() => {
+                    dispatch({ type: 'FETCH_POKEMONS_ERROR' });
                   });
               });
             })
             .catch(() => {
-              dispatch({ type: 'FETCH_POKEDATA_ERROR' });
+              dispatch({ type: 'FETCH_POKEMONS_ERROR' });
             });
   };
 }
 
-export function groupByType(type) {
+export function setPokeType() {
   return (dispatch) => {
     dispatch({
-      type: 'GROUP_BY_TYPE',
+      type: 'SET_TYPE',
+    });
+  };
+}
+
+export function fetchPokeType(type) {
+  return (dispatch) => {
+    dispatch({
+      type: 'FETCH_POKETYPE',
       value: {
         type
       }
     });
-  };
-}
-export function fetchPokeType(type) {
-  return (dispatch) => {
     axios.get(`https://pokeapi.co/api/v2/type/${type}`)
         .then((response) => {
-          const pokemons = response.data.pokemon.map(poke => poke.pokemon);
+          dispatch({
+            type: 'FETCH_POKEMONS_COMPLETE',
+            value: {
+              count: response.data.pokemon.length
+            }
+          });
+          const pokemons = response.data.pokemon.slice(0, 20).map(poke => poke.pokemon);
+          dispatch({ type: 'FETCH_POKEDATA' });
           pokemons.map((poke) => {
-            dispatch({ type: 'FETCH_POKEDATA' });
             return axios.get(poke.url)
               .then((res) => {
                 dispatch({
@@ -60,11 +71,14 @@ export function fetchPokeType(type) {
                     pokeData: res.data
                   }
                 });
+              })
+              .catch(() => {
+                dispatch({ type: 'FETCH_POKEMONS_ERROR' });
               });
           });
         })
         .catch(() => {
-          dispatch({ type: 'FETCH_POKEDATA_ERROR' });
+          dispatch({ type: 'FETCH_POKEMONS_ERROR' });
         });
   };
 }

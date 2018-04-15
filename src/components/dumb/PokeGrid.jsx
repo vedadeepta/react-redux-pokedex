@@ -1,13 +1,22 @@
 import React from 'react';
 import PropsTypes from 'prop-types';
+import StackGrid from 'react-stack-grid';
+import { Link } from 'react-router-dom';
 import {
   Card,
   CardActions,
   CardHeader,
   CardText
 } from 'material-ui/Card';
+import {
+  indigo600,
+  green900,
+  yellow600,
+  deepOrange700
+} from 'material-ui/styles/colors';
 import Avatar from 'material-ui/Avatar';
 import FlatButton from 'material-ui/FlatButton';
+import PokeTypes from './PokeTypes';
 
 function PokeGrid(props) {
   const styles = {
@@ -23,35 +32,70 @@ function PokeGrid(props) {
     }
   };
   const pokemons = props.pokemons;
+  const colors = [indigo600, green900, yellow600, deepOrange700];
   return (
-    <div className="row" style={styles.gridList}>
+    <StackGrid columnWidth={250}>
       {
         pokemons.map((poke, index) => (
           <div
-            className="col-md-4"
             key={index}
             style={styles.gridTile}
           >
             <Card>
               <CardHeader
-                title={poke.name}
+                title={
+                  <b>
+                    {poke.name[0].toUpperCase() + poke.name.slice(1)}
+                  </b>
+                }
                 avatar={
                   <Avatar src={poke.sprites.front_default} size={90} />
                 }
               />
               <CardText>
+                Weight:&nbsp;
+                <b>
+                  {
+                    poke.weight
+                  }
+                </b>
+                &nbsp;
+                Abilities:&nbsp;
                 {
-                  poke.weight
+                  poke.abilities.map((ab, i) => (
+                    <span>
+                      <b
+                        style={{
+                          color: colors[i]
+                        }}
+                      >
+                        {ab.ability.name}
+                      </b>
+                      &nbsp;
+                    </span>
+                  ))
                 }
               </CardText>
+              <CardText>
+                <PokeTypes pokeTypes={poke.types.map(t => t.type)} />
+              </CardText>
               <CardActions>
-                <FlatButton label="More" />
+                <Link
+                  to={{
+                    pathname: '/pokemon',
+                    state: {
+                      pokeData: poke
+                    }
+                  }}
+                >
+                  <FlatButton label="More" />
+                </Link>
               </CardActions>
             </Card>
           </div>
         ))
       }
-    </div>
+    </StackGrid>
   );
 }
 

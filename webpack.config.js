@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
 	context: path.resolve('src/'),
@@ -65,7 +66,14 @@ module.exports = {
 	resolve: {
 		extensions: ['', '.js', '.jsx']
 	},
-	// linting
+/*    plugins: [
+        new webpack.DefinePlugin({
+            'process.env': {
+                'NODE_ENV': "'production'"
+            }
+        }),
+    ],
+*/	// linting
 		eslint: {
 		emitError: true,
 		emitWarning: true,

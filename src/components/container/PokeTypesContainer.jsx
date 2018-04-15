@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 /* ACTIONS */
 import pokeTypesFetch from '../../store/actionCreator/getPokeTypes';
 /* DUMB */
-import PokeType from '../dumb/PokeType';
+import PokeTypes from '../dumb/PokeTypes';
 
 class PokeTypesContainer extends React.Component {
 
@@ -28,21 +28,7 @@ class PokeTypesContainer extends React.Component {
         }}
       >
         Types
-        <div
-          style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-          }}
-        >
-          {
-            pokeTypes ?
-              pokeTypes.map(type => (
-                <PokeType type={type.name} />
-              ))
-            :
-              null
-          }
-        </div>
+        <PokeTypes pokeTypes={pokeTypes} />
       </div>
     );
   }
