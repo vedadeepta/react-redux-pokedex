@@ -2,7 +2,7 @@
   "name": "pokemon",
   "main": "webpack.config.js",
   "scripts": {
-    "build": "webpack --config ./webpack.config.prod.js --optimize-minimize && cp public/index.html build/index.html",
+    "build": "webpack --config ./webpack.config.prod.js --optimize-minimize && cp ./public/index.html ./build/index.html",
     "start": "node_modules/.bin/webpack-dev-server --inline",
     "test": "node_modules/.bin/mocha -r jsdom-global/register --compilers js:babel-core/register  assets/js/test/**/*.test.js"
   },
@@ -54,6 +54,8 @@
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^2.2.2",
     "eslint-plugin-react": "^6.3.0",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7"
   }

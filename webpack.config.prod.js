@@ -5,12 +5,8 @@ module.exports = {
 	context: path.resolve('src/'),
 	entry: ["./index"],
 	output: {
-		path: path.resolve('build/js/'),
-		publicPath: '/public/',
+		path: path.resolve('build/public/'),
 		filename:  "bundle.js"
-	},
-	devServer: {
-		contentBase: 'public'
 	},
 	module: {
 	    rules: [
@@ -31,31 +27,34 @@ module.exports = {
 				test: /\.css$/,
 				loaders: ['style-loader', 'css-loader']
 			},
-		      {
-		        test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
-		        loader: "url-loader?limit=10000&mimetype=application/font-woff"
-		      }, {
-		        test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
-		        loader: "url-loader?limit=10000&mimetype=application/font-woff"
-		      }, {
-		        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-		        loader: "url-loader?limit=10000&mimetype=application/octet-stream"
-		      }, {
-		        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-		        loader: "file-loader"
-		      }, {
-		        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-		        loader: "url-loader?limit=10000&mimetype=image/svg+xml"
-		      },
 			{
-		    test: /\.js(x)?$/,         
-		    exclude: /node_modules/,
-		    loader: "babel",
-		    query:
-		      {
-		        presets:['es2015', 'react'],
-		        plugins:['transform-decorators-legacy']
-		      }
+				test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
+				loader: "url-loader?limit=10000&mimetype=application/font-woff"
+			}, 
+			{
+				test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
+				loader: "url-loader?limit=10000&mimetype=application/font-woff"
+			}, 
+			{
+				test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+				loader: "url-loader?limit=10000&mimetype=application/octet-stream"
+			}, 
+			{
+				test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+				loader: "file-loader"
+			}, 
+			{
+				test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+				loader: "url-loader?limit=10000&mimetype=image/svg+xml"
+			},
+			{
+			    test: /\.js(x)?$/,         
+			    exclude: /node_modules/,
+			    loader: "babel",
+			    query:{
+			        presets:['es2015', 'react'],
+			        plugins:['transform-decorators-legacy']
+			    }
 			},
 			{
 		    test: /\.json$/,        
@@ -71,7 +70,7 @@ module.exports = {
             'process.env': {
                 'NODE_ENV': "'production'"
             }
-        }),
+        })
     ],
 	// linting
 		eslint: {
