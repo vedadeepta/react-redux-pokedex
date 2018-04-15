@@ -17,7 +17,7 @@ function App() {
         <div>
           <Route exact path="/" component={PokeGridContainer} />
           <Route path="/type/:name?" component={PokeGridContainer} />
-          <Route path="/pokemon" component={PokeData} />
+          <Route path="/pokemon/:name?" component={PokeData} />
         </div>
       </Router>
     </MuiThemeProvider>

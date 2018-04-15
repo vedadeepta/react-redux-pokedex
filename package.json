@@ -2,7 +2,7 @@
   "name": "pokemon",
   "main": "webpack.config.js",
   "scripts": {
-    "build": "webpack --optimize-minimize && cp public/index.html build/index.html",
+    "build": "webpack --config ./webpack.config.prod.js --optimize-minimize && cp public/index.html build/index.html",
     "start": "node_modules/.bin/webpack-dev-server --inline",
     "test": "node_modules/.bin/mocha -r jsdom-global/register --compilers js:babel-core/register  assets/js/test/**/*.test.js"
   },

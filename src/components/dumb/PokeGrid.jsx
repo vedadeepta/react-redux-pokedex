@@ -15,7 +15,7 @@ import {
   deepOrange700
 } from 'material-ui/styles/colors';
 import Avatar from 'material-ui/Avatar';
-import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
 import PokeTypes from './PokeTypes';
 
 function PokeGrid(props) {
@@ -82,13 +82,13 @@ function PokeGrid(props) {
               <CardActions>
                 <Link
                   to={{
-                    pathname: '/pokemon',
+                    pathname: `/pokemon/${poke.name}`,
                     state: {
                       pokeData: poke
                     }
                   }}
                 >
-                  <FlatButton label="More" />
+                  <RaisedButton label="VizStats" />
                 </Link>
               </CardActions>
             </Card>
