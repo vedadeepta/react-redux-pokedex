@@ -109,10 +109,18 @@ const mapStoreToProps = (store) => {
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    pokeFetch: (limit, offset) => dispatch(pokeFetch(limit, offset)),
-    fetchPokeType: type => dispatch(fetchPokeType(type)),
-    setPokeType: () => dispatch(setPokeType()),
-    fetchMorePokeType: (type, offset) => dispatch(fetchMorePokeType(type, offset))
+    pokeFetch: (limit, offset) => {
+      dispatch(pokeFetch(limit, offset));
+    },
+    fetchPokeType: (type) => {
+      dispatch(fetchPokeType(type));
+    },
+    setPokeType: () => {
+      dispatch(setPokeType());
+    },
+    fetchMorePokeType: (type, offset) => {
+      dispatch(fetchMorePokeType(type, offset));
+    }
   };
 };
 

@@ -16,18 +16,20 @@ export function pokeFetch(limit, offset) {
               });
               dispatch({ type: 'FETCH_POKEDATA' });
               pokemons.map((poke) => {
-                return axios.get(poke.url)
-                  .then((res) => {
-                    dispatch({
-                      type: 'FETCH_POKEDATA_COMPLETE',
-                      value: {
-                        pokeData: res.data
-                      }
+                return setTimeout(() => {
+                  return axios.get(poke.url)
+                    .then((res) => {
+                      dispatch({
+                        type: 'FETCH_POKEDATA_COMPLETE',
+                        value: {
+                          pokeData: res.data
+                        }
+                      });
+                    })
+                    .catch(() => {
+                      dispatch({ type: 'FETCH_POKEMONS_ERROR' });
                     });
-                  })
-                  .catch(() => {
-                    dispatch({ type: 'FETCH_POKEMONS_ERROR' });
-                  });
+                }, 0);
               });
             })
             .catch(() => {
@@ -69,18 +71,20 @@ export function fetchPokeType(type) {
           const pokemons = response.data.pokemon.slice(0, 35).map(poke => poke.pokemon);
           dispatch({ type: 'FETCH_POKEDATA' });
           pokemons.map((poke) => {
-            return axios.get(poke.url)
-              .then((res) => {
-                dispatch({
-                  type: 'FETCH_POKEDATA_COMPLETE',
-                  value: {
-                    pokeData: res.data
-                  }
+            return setTimeout(() => {
+              return axios.get(poke.url)
+                .then((res) => {
+                  dispatch({
+                    type: 'FETCH_POKEDATA_COMPLETE',
+                    value: {
+                      pokeData: res.data
+                    }
+                  });
+                })
+                .catch(() => {
+                  dispatch({ type: 'FETCH_POKEMONS_ERROR' });
                 });
-              })
-              .catch(() => {
-                dispatch({ type: 'FETCH_POKEMONS_ERROR' });
-              });
+            }, 0);
           });
         })
         .catch(() => {
@@ -101,7 +105,8 @@ export function fetchMorePokeType(type, offset) {
     });
     dispatch({ type: 'FETCH_POKEDATA' });
     pokemons.map((poke) => {
-      return axios.get(poke.url)
+      return setTimeout(() => {
+        return axios.get(poke.url)
           .then((res) => {
             dispatch({
               type: 'FETCH_POKEDATA_COMPLETE',
@@ -113,6 +118,7 @@ export function fetchMorePokeType(type, offset) {
           .catch(() => {
             dispatch({ type: 'FETCH_POKEMONS_ERROR' });
           });
+      }, 0);
     });
   };
 }

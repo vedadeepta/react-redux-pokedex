@@ -42,7 +42,9 @@ const mapStoreToProps = (store) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    pokeTypesFetch: () => dispatch(pokeTypesFetch())
+    pokeTypesFetch: () => {
+      dispatch(pokeTypesFetch());
+    }
   };
 };
 PokeTypesContainer.propTypes = {

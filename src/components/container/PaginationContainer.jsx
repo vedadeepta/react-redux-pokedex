@@ -30,7 +30,9 @@ const mapStoreToProps = (store) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setPageCount: count => dispatch(setPageCount(count))
+    setPageCount: (count) => {
+      dispatch(setPageCount(count));
+    }
   };
 };
 
