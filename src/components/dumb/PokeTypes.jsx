@@ -13,7 +13,7 @@ export default function PokeType(props) {
   const pokeTypes = props.pokeTypes;
   const mapTypesToEl = [];
   mapTypesToEl.push(
-    <Link to="/#/">
+    <Link to="/">
       <Chip style={styles.chip}>
         <Avatar size={32}>A</Avatar>
           All
