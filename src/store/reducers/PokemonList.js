@@ -5,6 +5,7 @@ const initialState = {
   fetching: false,
   pokeTypeAPI: false, // indicates if poketype needs to be fetched from api
   error: false,
+  msg: '', // message to be displayed in snackbar
   type: 'none'
 };
 
@@ -20,7 +21,8 @@ export default function fetchReducer(state = initialState, action) {
         {
           fetching: true,
           allPokemons: [],
-          pokemons: []
+          pokemons: [],
+          msg: 'Fetching pokemons'
         }
       );
     }
@@ -51,7 +53,7 @@ export default function fetchReducer(state = initialState, action) {
           {
             fetching: false,
             pokeTypeAPI: false,
-            allPokemons: state.pokemons.concat(action.value.pokeData),
+            allPokemons: state.allPokemons.concat(action.value.pokeData),
             pokemons: state.pokemons.concat(action.value.pokeData)
           }
         );
@@ -71,7 +73,8 @@ export default function fetchReducer(state = initialState, action) {
         state,
         {
           fetching: false,
-          error: true
+          error: true,
+          msg: 'Error fetching pokemons'
         }
       );
     }
@@ -81,6 +84,7 @@ export default function fetchReducer(state = initialState, action) {
         state,
         {
           type: action.value.type,
+          msg: `Fetching pokemons of type ${action.value.type}`,
           pokeTypeAPI: true,
           allPokemons: [],
           pokemons: []
@@ -109,7 +113,9 @@ export default function fetchReducer(state = initialState, action) {
         {},
         state,
         {
-          type: 'none'
+          type: 'none',
+          pokemons: [],
+          allPokemons: []
         }
       );
     }

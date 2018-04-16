@@ -36,9 +36,9 @@ function PokeGrid(props) {
   return (
     <StackGrid columnWidth={250}>
       {
-        pokemons.map((poke, index) => (
+        pokemons.map(poke => (
           <div
-            key={index}
+            key={poke.id}
             style={styles.gridTile}
           >
             <Card>
@@ -63,7 +63,9 @@ function PokeGrid(props) {
                 Abilities:&nbsp;
                 {
                   poke.abilities.map((ab, i) => (
-                    <span>
+                    <span
+                      key={i}
+                    >
                       <b
                         style={{
                           color: colors[i]

@@ -27,7 +27,7 @@ class PokeTypesContainer extends React.Component {
           textAlign: 'center'
         }}
       >
-        Types
+        <h3> Group By Types </h3>
         <PokeTypes pokeTypes={pokeTypes} />
       </div>
     );

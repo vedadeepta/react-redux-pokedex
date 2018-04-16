@@ -20,6 +20,7 @@ class SearchBarContainer extends React.Component {
     return (
       <SearchBar
         onChange={this.handleChange}
+        onRequestSearch={this.handleChange}
         hintText="Search By Name"
         style={{
           marginTop: 6,

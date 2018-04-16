@@ -11,12 +11,21 @@ export default function PokeType(props) {
     }
   };
   const pokeTypes = props.pokeTypes;
-  const mapTypesToEl = (
+  let mapTypesToEl = [];
+  mapTypesToEl.push(
+    <Link to="/#/">
+      <Chip style={styles.chip}>
+        <Avatar size={32}>A</Avatar>
+          All
+      </Chip>
+    </Link>
+  );
+  mapTypesToEl = (
     pokeTypes ?
       pokeTypes.map(t => (
         <Link to={`/type/${t.name}`}>
           <Chip style={styles.chip}>
-            <Avatar size={32}>A</Avatar>
+            <Avatar size={32}>{t.name[0].toUpperCase()}</Avatar>
             {t.name}
           </Chip>
         </Link>
@@ -24,7 +33,6 @@ export default function PokeType(props) {
     :
       null
   );
-
   return (
     <div
       style={{

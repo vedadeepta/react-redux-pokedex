@@ -75,7 +75,7 @@ class PokeGridContainer extends React.Component {
                   />
               }
               {
-                this.props.type === 'none' ?
+                (this.props.type === 'none' && this.props.pokemons > this.limit) ?
                   <PaginationContainer />
                 :
                   null
@@ -83,8 +83,8 @@ class PokeGridContainer extends React.Component {
             </div>
         }
         <SnackbarWrapper
-          open={this.props.error}
-          message="Error in fetching Pokemons"
+          open={this.props.error || this.props.fetching}
+          message={this.props.msg}
         />
       </div>
     );
@@ -98,7 +98,8 @@ const mapStoreToProps = (store) => {
     current: store.PageCount.count,
     fetching: store.PokemonList.fetching,
     error: store.PokemonList.error,
-    type: store.PokemonList.type
+    type: store.PokemonList.type,
+    msg: store.PokemonList.msg
   };
 };
 const mapDispatchToProps = (dispatch) => {
@@ -120,7 +121,8 @@ PokeGridContainer.propTypes = {
   current: PropTypes.number,
   fetching: PropTypes.bool,
   error: PropTypes.bool,
-  type: PropTypes.string
+  type: PropTypes.string,
+  msg: PropTypes.string
 };
 
 export default connect(

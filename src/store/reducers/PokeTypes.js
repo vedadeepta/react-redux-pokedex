@@ -2,7 +2,7 @@ const initialState = {
   pokeTypes: [],
   fetching: false,
   fetched: false,
-  error: false
+  error: false,
 };
 
 export default function reducer(state = initialState, action) {
@@ -21,7 +21,7 @@ export default function reducer(state = initialState, action) {
     case 'FETCH_POKETYPES_ERROR' : {
       return Object.assign({
         fetching: false,
-        error: true
+        error: true,
       });
     }
     default : {
