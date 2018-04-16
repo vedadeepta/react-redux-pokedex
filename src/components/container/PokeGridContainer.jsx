@@ -51,6 +51,10 @@ class PokeGridContainer extends React.Component {
         this.props.pokeFetch(this.limit, (nextProps.current - 1) * this.limit);
       }
     }
+    if (nextProps.location.pathname.split('/')[1] === '') {
+      this.props.setPokeType();
+      this.props.pokeFetch(this.limit, (nextProps.current - 1) * this.limit);
+    }
   }
 
   render() {
