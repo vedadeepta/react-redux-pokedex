@@ -52,7 +52,7 @@ class PokeGridContainer extends React.Component {
       <div>
         <AppBar
           title="Get'em all"
-          iconClassNameRight="muidocs-icon-navigation-expand-more"
+          showMenuIconButton={false}
         >
           <SearchBarContainer />
         </AppBar>
@@ -74,7 +74,12 @@ class PokeGridContainer extends React.Component {
                     pokemons={this.props.pokemons}
                   />
               }
-              <PaginationContainer />
+              {
+                this.props.type === 'none' ?
+                  <PaginationContainer />
+                :
+                  null
+              }
             </div>
         }
         <SnackbarWrapper
@@ -92,7 +97,8 @@ const mapStoreToProps = (store) => {
     pokeTypeAPI: store.PokemonList.pokeTypeAPI,
     current: store.PageCount.count,
     fetching: store.PokemonList.fetching,
-    error: store.PokemonList.error
+    error: store.PokemonList.error,
+    type: store.PokemonList.type
   };
 };
 const mapDispatchToProps = (dispatch) => {
@@ -113,7 +119,8 @@ PokeGridContainer.propTypes = {
   pokeTypeAPI: PropTypes.bool,
   current: PropTypes.number,
   fetching: PropTypes.bool,
-  error: PropTypes.bool
+  error: PropTypes.bool,
+  type: PropTypes.string
 };
 
 export default connect(

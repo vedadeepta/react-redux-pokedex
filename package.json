@@ -9,10 +9,6 @@
   "dependencies": {
     "axios": "^0.15.2",
     "bootstrap": "^3.3.7",
-    "file-loader": "^0.9.0",
-    "history": "^4.3.0",
-    "json-loader": "^0.5.4",
-    "lodash": "^4.16.4",
     "material-ui": "^0.20.0",
     "material-ui-pagination": "^1.1.6",
     "material-ui-search-bar": "^0.4.1",
@@ -22,20 +18,14 @@
     "prop-types": "^15.6.1",
     "query-string": "^6.0.0",
     "react": "^15.3.2",
-    "react-addons-css-transition-group": "^15.3.2",
-    "react-addons-test-utils": "^15.4.0",
     "react-d3-components": "^0.9.1",
     "react-dom": "^15.3.2",
-    "react-infinite-scroll": "^0.1.5",
-    "react-infinite-scroll-component": "^2.0.1",
-    "react-infinite-scroll-es2015": "^1.0.0",
     "react-redux": "^4.4.5",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "react-stack-grid": "^0.7.1",
     "redux": "^3.6.0",
     "redux-logger": "^2.7.4",
-    "redux-mock-store": "^1.2.1",
     "redux-promise-middleware": "^4.1.0",
     "redux-thunk": "^2.1.0",
     "webpack": "^1.13.2",
@@ -57,6 +47,8 @@
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
     "style-loader": "^0.13.1",
-    "url-loader": "^0.5.7"
+    "url-loader": "^0.5.7",
+    "json-loader": "^0.5.4",
+    "file-loader": "^0.9.0"
   }
 }
