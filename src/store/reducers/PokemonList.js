@@ -58,14 +58,7 @@ export default function fetchReducer(state = initialState, action) {
           }
         );
       }
-      return Object.assign(
-        {},
-        state,
-        {
-          fetching: false,
-          pokeTypeAPI: false
-        }
-      );
+      return state;
     }
     case 'FETCH_POKEMONS_ERROR' : {
       return Object.assign(
