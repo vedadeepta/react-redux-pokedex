@@ -1,5 +1,6 @@
-React-redux consuming Pokeapi https://pokeapi.co/
-Live  demo: http://gamy-sock.surge.sh
+React-redux consuming Pokeapi https://pokeapi.co/.
+
+Live  demo: http://luxuriant-horse.surge.sh/
  
 
 Run **``` npm i ```** to install dependencies.
