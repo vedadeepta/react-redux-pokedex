@@ -60,7 +60,13 @@ export function fetchPokeType(type) {
               count: response.data.pokemon.length
             }
           });
-          const pokemons = response.data.pokemon.slice(0, 20).map(poke => poke.pokemon);
+          dispatch({
+            type: 'STORE_TYPE_PAGINATION_DATA',
+            value: {
+              data: response.data.pokemon
+            }
+          });
+          const pokemons = response.data.pokemon.slice(0, 35).map(poke => poke.pokemon);
           dispatch({ type: 'FETCH_POKEDATA' });
           pokemons.map((poke) => {
             return axios.get(poke.url)
@@ -80,5 +86,33 @@ export function fetchPokeType(type) {
         .catch(() => {
           dispatch({ type: 'FETCH_POKEMONS_ERROR' });
         });
+  };
+}
+
+export function fetchMorePokeType(type, offset) {
+  return (dispatch, getState) => {
+    const typeData = getState().TypePagination.typeData;
+    const pokemons = typeData.slice(offset, 35 * (offset + 1)).map(poke => poke.pokemon);
+    dispatch({
+      type: 'FETCH_POKETYPE',
+      value: {
+        type
+      }
+    });
+    dispatch({ type: 'FETCH_POKEDATA' });
+    pokemons.map((poke) => {
+      return axios.get(poke.url)
+          .then((res) => {
+            dispatch({
+              type: 'FETCH_POKEDATA_COMPLETE',
+              value: {
+                pokeData: res.data
+              }
+            });
+          })
+          .catch(() => {
+            dispatch({ type: 'FETCH_POKEMONS_ERROR' });
+          });
+    });
   };
 }

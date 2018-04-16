@@ -11,7 +11,7 @@ export default function PokeType(props) {
     }
   };
   const pokeTypes = props.pokeTypes;
-  let mapTypesToEl = [];
+  const mapTypesToEl = [];
   mapTypesToEl.push(
     <Link to="/#/">
       <Chip style={styles.chip}>
@@ -20,7 +20,7 @@ export default function PokeType(props) {
       </Chip>
     </Link>
   );
-  mapTypesToEl = (
+  const mapTypesToEldy = (
     pokeTypes ?
       pokeTypes.map(t => (
         <Link to={`/type/${t.name}`}>
@@ -40,7 +40,7 @@ export default function PokeType(props) {
         flexWrap: 'wrap',
       }}
     >
-      { mapTypesToEl }
+      { mapTypesToEl.concat(mapTypesToEldy) }
     </div>
   );
 }

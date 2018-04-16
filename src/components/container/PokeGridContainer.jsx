@@ -11,7 +11,8 @@ import PaginationContainer from './PaginationContainer';
 import {
   pokeFetch,
   fetchPokeType,
-  setPokeType
+  setPokeType,
+  fetchMorePokeType
 } from '../../store/actionCreator/getPokemons';
 /* DUMB COMPONENTS */
 import PokeGrid from '../dumb/PokeGrid';
@@ -43,7 +44,12 @@ class PokeGridContainer extends React.Component {
       nextProps.fetchPokeType(nextProps.location.pathname.split('/')[2]);
     }
     if (nextProps.current !== this.props.current) {
-      this.props.pokeFetch(this.limit, (nextProps.current - 1) * this.limit);
+      if (nextProps.location.pathname.split('/')[1] === 'type') {
+        const type = nextProps.location.pathname.split('/')[2];
+        this.props.fetchMorePokeType(type, (nextProps.current - 1) * this.limit);
+      } else {
+        this.props.pokeFetch(this.limit, (nextProps.current - 1) * this.limit);
+      }
     }
   }
 
@@ -75,7 +81,7 @@ class PokeGridContainer extends React.Component {
                   />
               }
               {
-                (this.props.type === 'none' && this.props.pokemons > this.limit) ?
+                this.props.pokemons.length > this.limit - 1 ?
                   <PaginationContainer />
                 :
                   null
@@ -98,7 +104,6 @@ const mapStoreToProps = (store) => {
     current: store.PageCount.count,
     fetching: store.PokemonList.fetching,
     error: store.PokemonList.error,
-    type: store.PokemonList.type,
     msg: store.PokemonList.msg
   };
 };
@@ -106,7 +111,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     pokeFetch: (limit, offset) => dispatch(pokeFetch(limit, offset)),
     fetchPokeType: type => dispatch(fetchPokeType(type)),
-    setPokeType: () => dispatch(setPokeType())
+    setPokeType: () => dispatch(setPokeType()),
+    fetchMorePokeType: (type, offset) => dispatch(fetchMorePokeType(type, offset))
   };
 };
 
@@ -114,6 +120,7 @@ PokeGridContainer.propTypes = {
   pokeFetch: PropTypes.func,
   fetchPokeType: PropTypes.func,
   setPokeType: PropTypes.func,
+  fetchMorePokeType: PropTypes.func,
   pokemons: PropTypes.array,
   location: PropTypes.object,
   pathname: PropTypes.string,
@@ -121,7 +128,6 @@ PokeGridContainer.propTypes = {
   current: PropTypes.number,
   fetching: PropTypes.bool,
   error: PropTypes.bool,
-  type: PropTypes.string,
   msg: PropTypes.string
 };
 
