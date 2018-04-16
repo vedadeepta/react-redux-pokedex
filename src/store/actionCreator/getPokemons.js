@@ -68,7 +68,7 @@ export function fetchPokeType(type) {
               data: response.data.pokemon
             }
           });
-          const pokemons = response.data.pokemon.slice(0, 35).map(poke => poke.pokemon);
+          const pokemons = response.data.pokemon.slice(0, 15).map(poke => poke.pokemon);
           dispatch({ type: 'FETCH_POKEDATA' });
           pokemons.map((poke) => {
             return setTimeout(() => {
@@ -96,7 +96,7 @@ export function fetchPokeType(type) {
 export function fetchMorePokeType(type, offset) {
   return (dispatch, getState) => {
     const typeData = getState().TypePagination.typeData;
-    const pokemons = typeData.slice(offset, 35 * (offset + 1)).map(poke => poke.pokemon);
+    const pokemons = typeData.slice(offset, 15 * (offset + 1)).map(poke => poke.pokemon);
     dispatch({
       type: 'FETCH_POKETYPE',
       value: {

@@ -21,7 +21,7 @@ import SnackbarWrapper from '../dumb/SnackbarWrapper';
 class PokeGridContainer extends React.Component {
   constructor(props) {
     super(props);
-    this.limit = 35;
+    this.limit = 15;
   }
 
   componentWillMount() {
