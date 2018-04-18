@@ -84,23 +84,6 @@ export default function fetchReducer(state = initialState, action) {
         }
       );
     }
-    case 'SEARCH' : {
-      const phrase = action.value.phrase;
-      const pokemons = state.allPokemons;
-      let pokeFilter = [];
-      if (phrase.length !== 0) {
-        pokeFilter = pokemons.filter(poke => poke.name.includes(phrase.toLowerCase()));
-      } else {
-        pokeFilter = state.allPokemons;
-      }
-      return Object.assign(
-        {},
-        state,
-        {
-          pokemons: pokeFilter
-        }
-      );
-    }
     case 'SET_TYPE' : {
       return Object.assign(
         {},

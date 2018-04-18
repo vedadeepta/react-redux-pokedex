@@ -54,6 +54,9 @@ class PokeGridContainer extends React.Component {
   }
 
   render() {
+    const pokemons = this.props.pokemons;
+    const phrase = this.props.phrase;
+    const filterPoke = pokemons.filter(poke => poke.name.includes(phrase.toLowerCase()));
     return (
       <div>
         <AppBar
@@ -77,11 +80,11 @@ class PokeGridContainer extends React.Component {
                   </center>
                 :
                   <PokeGrid
-                    pokemons={this.props.pokemons}
+                    pokemons={filterPoke}
                   />
               }
               {
-                this.props.pokemons.length > this.limit - 1 ?
+                filterPoke.length > this.limit - 1 ?
                   <PaginationContainer />
                 :
                   null
@@ -104,7 +107,8 @@ const mapStoreToProps = (store) => {
     current: store.PageCount.count,
     fetching: store.PokemonList.fetching,
     error: store.PokemonList.error,
-    msg: store.PokemonList.msg
+    msg: store.PokemonList.msg,
+    phrase: store.SearchPhrase.phrase
   };
 };
 const mapDispatchToProps = (dispatch) => {
@@ -136,7 +140,8 @@ PokeGridContainer.propTypes = {
   current: PropTypes.number,
   fetching: PropTypes.bool,
   error: PropTypes.bool,
-  msg: PropTypes.string
+  msg: PropTypes.string,
+  phrase: PropTypes.string
 };
 
 export default connect(
