@@ -96,7 +96,7 @@ export function fetchPokeType(type) {
 export function fetchMorePokeType(type, offset) {
   return (dispatch, getState) => {
     const typeData = getState().TypePagination.typeData;
-    const pokemons = typeData.slice(offset, 15 * (offset + 1)).map(poke => poke.pokemon);
+    const pokemons = typeData.slice(offset, 15 + offset).map(poke => poke.pokemon);
     dispatch({
       type: 'FETCH_POKETYPE',
       value: {

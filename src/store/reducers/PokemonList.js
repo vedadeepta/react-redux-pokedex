@@ -1,6 +1,5 @@
 const initialState = {
-  allPokemons: [], // all pokemons data
-  pokemons: [], // filtered pokemons passed into React
+  pokemons: [], // all pokemons passed into React
   total: 0, // total count of all the pokemons needed for pagination
   fetching: false,
   pokeTypeAPI: false, // indicates if poketype needs to be fetched from api
@@ -20,7 +19,6 @@ export default function fetchReducer(state = initialState, action) {
         state,
         {
           fetching: true,
-          allPokemons: [],
           pokemons: [],
           msg: 'Fetching pokemons'
         }
@@ -53,7 +51,6 @@ export default function fetchReducer(state = initialState, action) {
           {
             fetching: false,
             pokeTypeAPI: false,
-            allPokemons: state.allPokemons.concat(action.value.pokeData),
             pokemons: state.pokemons.concat(action.value.pokeData)
           }
         );
@@ -79,7 +76,6 @@ export default function fetchReducer(state = initialState, action) {
           type: action.value.type,
           msg: `Fetching pokemons of type ${action.value.type}`,
           pokeTypeAPI: true,
-          allPokemons: [],
           pokemons: []
         }
       );
@@ -91,7 +87,6 @@ export default function fetchReducer(state = initialState, action) {
         {
           type: 'none',
           pokemons: [],
-          allPokemons: []
         }
       );
     }
