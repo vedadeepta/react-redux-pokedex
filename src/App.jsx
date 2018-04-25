@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 /* Custom */
 import PokeGridContainer from './components/container/PokeGridContainer';
+import FavouriteContainer from './components/container/FavouriteContainer';
 import PokeData from './components/dumb/PokeData';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
           <Route exact path="/" component={PokeGridContainer} />
           <Route path="/type/:name?" component={PokeGridContainer} />
           <Route path="/pokemon/:name?" component={PokeData} />
+          <Route path="/favs" component={FavouriteContainer} />
         </div>
       </Router>
     </MuiThemeProvider>

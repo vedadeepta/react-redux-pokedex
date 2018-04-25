@@ -5,7 +5,9 @@ const initialState = {
   pokeTypeAPI: false, // indicates if poketype needs to be fetched from api
   error: false,
   msg: '', // message to be displayed in snackbar
-  type: 'none'
+  type: 'none',
+  favs: [],
+  cache: {}
 };
 
 /**
@@ -45,13 +47,22 @@ export default function fetchReducer(state = initialState, action) {
     case 'FETCH_POKEDATA_COMPLETE' : {
       const pokemontypes = action.value.pokeData.types.map(t => t.type.name);
       if (pokemontypes.includes(state.type) || state.type === 'none') {
+        const cache = state.cache;
+        cache[state.type] = (
+          (typeof cache[state.type] === 'undefined') ?
+            [action.value.pokeData]
+          :
+            cache[state.type].concat(action.value.pokeData)
+        );
+
         return Object.assign(
           {},
           state,
           {
             fetching: false,
             pokeTypeAPI: false,
-            pokemons: state.pokemons.concat(action.value.pokeData)
+            pokemons: state.pokemons.concat(action.value.pokeData),
+            cache
           }
         );
       }
@@ -87,6 +98,88 @@ export default function fetchReducer(state = initialState, action) {
         {
           type: 'none',
           pokemons: [],
+        }
+      );
+    }
+    case 'ADD_POKE' : {
+      return Object.assign(
+        {},
+        state,
+        {
+          pokemons: state.pokemons.concat(action.value.pokeobj)
+        }
+      );
+    }
+    case 'ADD_FAV' : {
+      return Object.assign(
+        {},
+        state,
+        {
+          favs: state.favs.concat(action.value.poke)
+        }
+      );
+    }
+    case 'SET_FAVS' : {
+      return Object.assign(
+        {},
+        state,
+        {
+          pokemons: state.favs
+        }
+      );
+    }
+    case 'SET_CACHE' : {
+      return Object.assign(
+        {},
+        state,
+        {
+          pokemons: state.cache[action.value.type]
+        }
+      );
+    }
+    case 'EDIT' : {
+      /*eslint-disable  */
+      const pokemons = state.pokemons;
+      let i = 0;
+      for (i = 0; i < pokemons.length; i += 1) {
+        if (pokemons[i].id === action.value.id) {
+          break;
+        }
+      }
+      const ep = Object.assign(pokemons[i], action.value.editData);
+      console.log(ep);
+      const newpokelist = pokemons.slice(0, i).concat([ep]).concat(pokemons.slice(i + 1));
+      return Object.assign(
+        {},
+        state,
+        {
+          pokemons: newpokelist
+        }
+      );
+    }
+    case 'DEL' : {
+      const pokemons = state.pokemons;
+      let i = 0;
+      for(i = 0; i < pokemons.length; i += 1) {
+        if(pokemons[i].id === action.value.id) {
+          break;
+        }
+      }
+      const newpokeList = pokemons.slice(0, i).concat(pokemons.slice(i + 1));
+      return Object.assign(
+        {},
+        state,
+        {
+          pokemons: newpokeList
+        }
+      );
+    }
+    case 'SEARCHAPI' : {
+      return Object.assign(
+        {},
+        state,
+        {
+          pokemons: state.pokemons.concat(action.value.data)
         }
       );
     }

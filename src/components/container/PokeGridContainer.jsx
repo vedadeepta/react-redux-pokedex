@@ -7,12 +7,16 @@ import CircularProgress from 'material-ui/CircularProgress';
 import SearchBarContainer from './SearchBarContainer';
 import PokeTypesContainer from './PokeTypesContainer';
 import PaginationContainer from './PaginationContainer';
+/*eslint-disable*/
 /* ACTIONS */
 import {
   pokeFetch,
   fetchPokeType,
   setPokeType,
-  fetchMorePokeType
+  fetchMorePokeType,
+  setFavs,
+  setCache,
+  search
 } from '../../store/actionCreator/getPokemons';
 /* DUMB COMPONENTS */
 import PokeGrid from '../dumb/PokeGrid';
@@ -25,23 +29,44 @@ class PokeGridContainer extends React.Component {
   }
 
   componentWillMount() {
-    if (
+    if (this.props.showfav) {
+      this.props.setFavs();
+    } else if (
       this.props.location.pathname.split('/')[1] === 'type'
     ) {
-      this.props.fetchPokeType(this.props.location.pathname.split('/')[2]);
+      const type = this.props.location.pathname.split('/')[2];
+      const keys = Object.keys(this.props.cache);
+      if (keys.includes(type)) {
+        this.props.setCache(type);
+      } else {
+        this.props.fetchPokeType(this.props.location.pathname.split('/')[2]);
+      }
     } else {
       this.props.setPokeType();
-      this.props.pokeFetch(this.limit, (this.props.current - 1) * this.limit);
+      const keys = Object.keys(this.props.cache);
+      if (keys.includes('none')) {
+        this.props.setCache('none');
+      } else {
+        this.props.pokeFetch(this.limit, (this.props.current - 1) * this.limit);
+      }
     }
   }
 
   componentWillReceiveProps(nextProps) {
+    /*eslint-disable*/
     if (
       nextProps.location.pathname.split('/')[1] === 'type' &&
       nextProps.location.pathname.split('/')[2] !==
       this.props.location.pathname.split('/')[2]
     ) {
-      nextProps.fetchPokeType(nextProps.location.pathname.split('/')[2]);
+      const type = nextProps.location.pathname.split('/')[2];
+      console.log(type);
+      const keys = Object.keys(this.props.cache);
+      if (keys.includes(type)) {
+        this.props.setCache(type);
+      } else {
+        this.props.fetchPokeType(nextProps.location.pathname.split('/')[2]);
+      }
     }
     if (nextProps.current !== this.props.current) {
       if (nextProps.location.pathname.split('/')[1] === 'type') {
@@ -104,6 +129,7 @@ const mapStoreToProps = (store) => {
   return {
     pokemons: store.PokemonList.pokemons,
     pokeTypeAPI: store.PokemonList.pokeTypeAPI,
+    cache: store.PokemonList.cache,
     current: store.PageCount.count,
     fetching: store.PokemonList.fetching,
     error: store.PokemonList.error,
@@ -124,6 +150,15 @@ const mapDispatchToProps = (dispatch) => {
     },
     fetchMorePokeType: (type, offset) => {
       dispatch(fetchMorePokeType(type, offset));
+    },
+    setFavs: () => {
+      dispatch(setFavs());
+    },
+    setCache: (type) => {
+      dispatch(setCache(type));
+    },
+    search: (name) => {
+      dispatch(search(name));
     }
   };
 };
@@ -141,7 +176,11 @@ PokeGridContainer.propTypes = {
   fetching: PropTypes.bool,
   error: PropTypes.bool,
   msg: PropTypes.string,
-  phrase: PropTypes.string
+  phrase: PropTypes.string,
+  showfav: PropTypes.bool,
+  setFavs: PropTypes.func,
+  cache: PropTypes.array,
+  setCache: PropTypes.func
 };
 
 export default connect(

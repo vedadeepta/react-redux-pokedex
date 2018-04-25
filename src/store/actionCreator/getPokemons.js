@@ -122,3 +122,80 @@ export function fetchMorePokeType(type, offset) {
     });
   };
 }
+
+export function addPoke(pokeobj) {
+  return (dispatch) => {
+    dispatch({
+      type: 'ADD_POKE',
+      value: {
+        pokeobj
+      }
+    });
+  };
+}
+
+export function addToFav(poke) {
+  return (dispatch) => {
+    dispatch({
+      type: 'ADD_FAV',
+      value: {
+        poke
+      }
+    });
+  };
+}
+
+export function setFavs() {
+  return (dispatch) => {
+    dispatch({
+      type: 'SET_FAVS'
+    });
+  };
+}
+
+export function setCache(type) {
+  return (dispatch) => {
+    dispatch({
+      type: 'SET_CACHE',
+      value: {
+        type
+      }
+    });
+  };
+}
+export function editPoke(editData, id) {
+  return (dispatch) => {
+    dispatch({
+      type: 'EDIT',
+      value: {
+        editData,
+        id
+      }
+    });
+  };
+}
+
+export function deletePoke(id) {
+  return (dispatch) => {
+    dispatch({
+      type: 'DEL',
+      value: {
+        id
+      }
+    });
+  };
+}
+
+export function search(name) {
+  return (dispatch) => {
+    axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`)
+        .then((response) => {
+          dispatch({
+            type: 'SEARCHAPI',
+            value: {
+              data: response.data
+            }
+          });
+        });
+  };
+}
